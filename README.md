@@ -195,7 +195,7 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
   <details>
     <summary>Tela de perfil</summary>
 
-  - [82 - Implemente os elementos da a tela de perfil respeitando os atributos descritos no protótipo](#82---implemente-os-elementos-da-a-tela-de-perfil-respeitando-os-atributos-descritos-no-protótipo)
+  - [82 - Implemente os elementos da a tela de perfil respeitando os atributos descritos no protótipos](#82---implemente-os-elementos-da-a-tela-de-perfil-respeitando-os-atributos-descritos-no-protótipo)
   - [83 - Implemente a solução de maneira que o e-mail da pessoa usuária deve estar visível](#83---implemente-a-solução-de-maneira-que-o-e-mail-da-pessoa-usuária-deve-estar-visível)
   - [84 - Implemente 3 botões: um de nome "Receitas Feitas", um de nome "Receitas Favoritas" e um de nome "Sair"](#84---implemente-3-botões-um-de-nome-receitas-feitas-um-de-nome-receitas-favoritas-e-um-de-nome-sair)
   - [85 - Redirecione a pessoa usuária que, ao clicar no botão de "Receitas Favoritas", a rota deve mudar para a tela de receitas favoritas](#85---redirecione-a-pessoa-usuária-que-ao-clicar-no-botão-de-receitas-favoritas-a-rota-deve-mudar-para-a-tela-de-receitas-favoritas)
@@ -260,9 +260,9 @@ Você pode ler mais sobre atributos para testes [nesse link](https://www.eduardo
 ### Antes de começar a desenvolver:
 
 1. Clone o repositório
-  * `git clone git@github.com:tryber/sd-08-project-recipes-app.git`.
+  * `git clone git@github.com:tryber/sd-07-project-recipes-app.git`.
   * Entre na pasta do repositório que você acabou de clonar:
-    * `cd sd-08-project-recipes-app`
+    * `cd sd-07-project-recipes-app`
   * Vá para a branch do seu grupo, com `git checkout main-group-XX && git pull`, onde `XX` é o número do seu grupo. Exemplos: `main-group-1`, `main-group-22`.
 
 2. Instale as dependências e inicialize o projeto
@@ -296,7 +296,7 @@ Você pode ler mais sobre atributos para testes [nesse link](https://www.eduardo
   * Usando o exemplo anterior: `git push -u origin main-group-XX-cria-campo-de-input`
 
 6. Crie um novo `Pull Request` _(PR)_
-  * Vá até a página de _Pull Requests_ do [repositório no GitHub](https://github.com/tryber/sd-08-project-recipes-app/pulls)
+  * Vá até a página de _Pull Requests_ do [repositório no GitHub](https://github.com/tryber/sd-07-project-recipes-app/pulls)
   * Clique no botão verde _"New pull request"_
   * Clique na caixa de seleção _"Compare"_ e escolha a branch do grupo, `main-group-XX`, e a sua branch **com atenção**
   * Coloque um título para a sua _Pull Request_
@@ -304,7 +304,7 @@ Você pode ler mais sobre atributos para testes [nesse link](https://www.eduardo
   * Clique no botão verde _"Create pull request"_
   * Adicione uma descrição para o _Pull Request_ e clique no botão verde _"Create pull request"_
   * **Não se preocupe em preencher mais nada por enquanto!**
-  * Volte até a [página de _Pull Requests_ do repositório](https://github.com/tryber/sd-08-project-recipes-app/pulls) e confira que o seu _Pull Request_ está criado
+  * Volte até a [página de _Pull Requests_ do repositório](https://github.com/tryber/sd-07-project-recipes-app/pulls) e confira que o seu _Pull Request_ está criado
 
 7. Assim que aprovado por pelo menos duas pessoas do seu grupo e o _Linter_ estiver adereçado, acesse **SEU** _Pull Request_ e clique no botão _"Merge pull request"_
 
@@ -356,7 +356,7 @@ Projeto em grupo.
 
 Serão dez dias de projeto.
 
-Data de entrega para avaliação final do projeto: `DD/MM/YYYY - 14:00h`.
+Data de entrega para avaliação final do projeto: `16/02/2021 - 14:00h`.
 
 ---
 
@@ -373,9 +373,7 @@ Este repositório **já conta com uma `main-group` para cada grupo**, identifica
 
 ⚠ **ATENÇÃO! É POSSÍVEL COMMITAR, POR ENGANO, NA BRANCH DE OUTRO GRUPO, ENTÃO TOME MUITO CUIDADO** ⚠
 
-Para o bom andamento deste projeto disponibilizamos, além do README a seguir, um quadro Kanban com as demandas a realizar para o projeto ser concluído com sucesso. Confira o Slack para saber como acessar o quadro! É de suma importância que o grupo se organize utilizando o quadro para maior eficiência e para que se minimizem os conflitos que a união de vários códigos trará.
-
-Além disso, você verá que os requisitos do projeto tem, além das observações técnicas e do que será validado, descrições tais quais se veriam em um projeto real. É muito importante ser capaz de ler descrições como essa e transformá-las em produtos ou, se houver dúvida, saber tirar tais dúvidas! Seguimos à disposição no Slack para isso.
+Você verá que os requisitos do projeto tem, além das observações técnicas e do que será validado, descrições tais quais se veriam em um projeto real. É muito importante ser capaz de ler descrições como essa e transformá-las em produtos ou, se houver dúvida, saber tirar tais dúvidas! Seguimos à disposição no Slack para isso.
 
 
 Este repositório já contem um _template_ com um App React criado, configurado e com os testes automatizados que fazem parte da correção. Ele também conta com uma branch **main-group** para cada grupo, identificada como `main-group-1` para o grupo 1, `main-group-2` para o grupo 2 e assim por diante.
@@ -1027,8 +1025,6 @@ O que será verificado:
 
 ## Tela principal de receitas
 
- - **Observação:** lembre de componentizar muito bem os elementos em React nessa tela para evitar problemas de lógica e de complexidade ;).
-
 ### 25 - Implemente os elementos da tela principal de receitas respeitando os atributos descritos no protótipo
 
 O que será verificado:
@@ -1126,7 +1122,6 @@ Ou seja, retornando novamente todas as receitas. O nome do filtro deve ser "All"
   ```
 
 ## Tela de detalhes de uma receita
- - **Observação:** lembre de componentizar muito bem os elementos em React nessa tela para evitar problemas de lógica e de complexidade ;).
 
 ### 33 - Implemente os elementos da tela de detalhes de uma receita respeitando os atributos descritos no protótipo
 
@@ -1286,8 +1281,6 @@ Os ícones dos botões podem ser encontrados em `src/images/whiteHeartIcon.svg` 
 <!-- ### 47 - A cobertura de testes unitários deve ser de no mínimo 90% -->
 
 ## Tela de receita em progresso
-
- - **Observação:** lembre de componentizar muito bem os elementos em React nessa tela para evitar problemas de lógica e de complexidade ;).
 
 ### 47 - Desenvolva a tela de maneira que contenha uma imagem da receita, seu titulo, sua categoria (ou se a bebida é alcoólica ou não) uma lista de ingredientes com suas respectivas quantidade e suas instruções
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import RecipesContextProvider from './context/RecipesContextProvider';
+import { Provider } from 'react-redux';
+
+import store from './store';
 import App from './App';
 
 ReactDOM.render(
-  <RecipesContextProvider>
-    <Router>
+  <Router>
+    <Provider store={ store }>
       <App />
-    </Router>
-  </RecipesContextProvider>,
+    </Provider>
+  </Router>,
   document.getElementById('root'),
 );

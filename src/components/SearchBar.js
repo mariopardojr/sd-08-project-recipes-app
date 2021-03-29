@@ -1,83 +1,169 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import RecipesContext from '../context/RecipesContext';
-import { getMeals, getCocktails } from '../services';
+import {
+  fetchMealsByFirstLetter,
+  fetchMealsByIngredient,
+  fetchMealsByName,
+} from '../actions/meals';
 
-function SearchBar({ type }) {
-  const [inputSearch, setInputSearch] = useState('');
-  const [radioSearchType, setRadioSearchType] = useState('');
+import {
+  fetchCocktailsByFirstLetter,
+  fetchCocktailsByIngredient,
+  fetchCocktailsByName,
+} from '../actions/cocktails';
 
-  const { setMeals, setDrinks } = useContext(RecipesContext);
+const INGREDIENT = 'ingredient';
+const NAME = 'name';
+const FIRSTLETTER = 'first-letter';
 
-  async function handleClick() {
-    if (radioSearchType === 'first-letter-search' && inputSearch.length > 1) {
-      alert('Sua busca deve conter somente 1 (um) caracter');
+const searchByMeals = (options, word, {
+  searchMealsByIngredient,
+  searchMealsByName,
+  searchMealsByFirstLetter,
+}) => {
+  if (options === INGREDIENT) {
+    searchMealsByIngredient(word);
+  } else if (options === NAME) {
+    searchMealsByName(word);
+  } else if (options === FIRSTLETTER) {
+    if (word.length === 1) {
+      searchMealsByFirstLetter(word);
     } else {
-      if (type === 'meals') {
-        const { meals } = await getMeals(radioSearchType, inputSearch);
-        if (!meals) {
-          alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-        } else {
-          setMeals(meals);
-        }
-      }
-      if (type === 'cocktails') {
-        const { drinks } = await getCocktails(radioSearchType, inputSearch);
-        if (!drinks) {
-          alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-        } else {
-          setDrinks(drinks);
-        }
-      }
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
   }
+};
+
+const searchByCocktails = (options, word, {
+  searchCocktailByIngredient,
+  searchCocktailByName,
+  searchCocktailByFirstLetter,
+}) => {
+  if (options === INGREDIENT) {
+    searchCocktailByIngredient(word);
+  } else if (options === NAME) {
+    searchCocktailByName(word);
+  } else if (options === FIRSTLETTER) {
+    if (word.length === 1) {
+      searchCocktailByFirstLetter(word);
+    } else {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+  }
+};
+
+const verifyIfExistIngredientSetted = (props) => {
+  const {
+    title,
+    ingredientMealCur,
+    ingredientCocktailCur,
+  } = props;
+  if (title === 'Comidas' && ingredientMealCur !== '') {
+    searchByMeals(INGREDIENT, ingredientMealCur, props);
+  }
+  if (title === 'Bebidas' && ingredientCocktailCur !== '') {
+    searchByCocktails(INGREDIENT, ingredientCocktailCur, props);
+  }
+};
+
+function SearchBar(props) {
+  const {
+    toggle,
+    title,
+    meals,
+    cocktails,
+  } = props;
+
+  const [word, setWord] = useState('');
+  const [options, setOptions] = useState('');
+
+  const handlerSubmit = (event) => {
+    event.preventDefault();
+    if (title === 'Comidas') {
+      searchByMeals(options, word, props);
+    }
+    if (title === 'Bebidas') {
+      searchByCocktails(options, word, props);
+    }
+  };
+
+  verifyIfExistIngredientSetted(props);
+
+  useEffect(() => {
+    const zero = 0;
+    if (title === 'Comidas' && meals.length === zero) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+    if (title === 'Bebidas' && cocktails.length === zero) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+  }, [meals, cocktails, title]);
 
   return (
-    <div>
-      <input
-        type="text"
-        value={ inputSearch }
-        data-testid="search-input"
-        onChange={ (e) => setInputSearch(e.target.value) }
-      />
-      <label htmlFor="ingredient-search">
-        Ingrediente
+    <div className="search-container" style={ { display: toggle ? 'inline' : 'none' } }>
+      {meals.length === 1 && (
+        <Redirect
+          to={ { pathname: `/comidas/${meals[0].idMeal}` } }
+        />
+      )}
+      {cocktails.length === 1 && (
+        <Redirect
+          to={ { pathname: `/bebidas/${cocktails[0].idDrink}` } }
+        />
+      )}
+      <label htmlFor="busca">
         <input
-          type="radio"
-          name="radio-search-type"
-          value="ingredient-search"
-          onClick={ (e) => setRadioSearchType(e.target.value) }
-          data-testid="ingredient-search-radio"
-          id="ingredient-search"
+          className="input-search"
+          id="busca"
+          name="word"
+          value={ word }
+          data-testid={ `${toggle ? 'search-input' : ''}` }
+          onChange={ (event) => setWord(event.target.value) }
         />
       </label>
-      <label htmlFor="name-search">
-        Nome
-        <input
-          type="radio"
-          name="radio-search-type"
-          value="name-search"
-          onClick={ (e) => setRadioSearchType(e.target.value) }
-          data-testid="name-search-radio"
-          id="name-search"
-        />
-      </label>
-      <label htmlFor="first-letter-search">
-        Primeira letra
-        <input
-          type="radio"
-          value="first-letter-search"
-          onClick={ (e) => setRadioSearchType(e.target.value) }
-          name="radio-search-type"
-          data-testid="first-letter-search-radio"
-          id="first-letter-search"
-        />
-      </label>
+      <div>
+        <label htmlFor="ingredient" className="label-search">
+          <input
+            id="ingredient"
+            value={ INGREDIENT }
+            type="radio"
+            name="options"
+            onChange={ (event) => setOptions(event.target.value) }
+            data-testid="ingredient-search-radio"
+          />
+          Ingrediente
+        </label>
+        <label htmlFor="name" className="label-search">
+          <input
+            id="name"
+            value={ NAME }
+            type="radio"
+            name="options"
+            onChange={ (event) => setOptions(event.target.value) }
+            data-testid="name-search-radio"
+          />
+          Nome
+        </label>
+        <label htmlFor="first-letter" className="label-search">
+          <input
+            id="first-letter"
+            value={ FIRSTLETTER }
+            type="radio"
+            name="options"
+            onChange={ (event) => setOptions(event.target.value) }
+            data-testid="first-letter-search-radio"
+          />
+          Primeira letra
+        </label>
+      </div>
       <button
+        className="button-search"
         type="button"
         data-testid="exec-search-btn"
-        onClick={ handleClick }
+        onClick={ handlerSubmit }
       >
         Buscar
       </button>
@@ -86,7 +172,27 @@ function SearchBar({ type }) {
 }
 
 SearchBar.propTypes = {
-  type: PropTypes.string.isRequired,
+  toggle: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  meals: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  cocktails: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-export default SearchBar;
+const mapStateToProps = ({ searchToggleReducer, meals, cocktails }) => ({
+  toggle: searchToggleReducer,
+  meals: meals.meals,
+  cocktails: cocktails.cocktails,
+  ingredientMealCur: meals.ingredientCurrency,
+  ingredientCocktailCur: cocktails.ingredientCurrency,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  searchMealsByIngredient: (ingredient) => dispatch(fetchMealsByIngredient(ingredient)),
+  searchMealsByName: (name) => dispatch(fetchMealsByName(name)),
+  searchMealsByFirstLetter: (letter) => dispatch(fetchMealsByFirstLetter(letter)),
+  searchCocktailByIngredient: (i) => dispatch(fetchCocktailsByIngredient(i)),
+  searchCocktailByName: (name) => dispatch(fetchCocktailsByName(name)),
+  searchCocktailByFirstLetter: (letter) => dispatch(fetchCocktailsByFirstLetter(letter)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

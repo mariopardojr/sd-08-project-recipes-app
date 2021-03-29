@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 
-function MealCard({ meal, index }) {
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const { strMeal, strMealThumb, idMeal } = meal;
-
-  return (
-    <div data-testid={ `${index}-recipe-card` }>
-      <button
-        type="button"
-        onClick={ () => setShouldRedirect(true) }
-      >
-        <img
-          src={ strMealThumb }
-          alt="meal"
-          data-testid={ `${index}-card-img` }
-          className="button-item"
-        />
-        <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
-      </button>
-      {shouldRedirect && <Redirect to={ `/comidas/${idMeal}` } />}
-    </div>
-  );
+class MealCard extends Component {
+  render() {
+    const { meals: { strMealThumb, strMeal, idMeal }, index, testid } = this.props;
+    return (
+      <div>
+        <Link to={ `/comidas/${idMeal}` }>
+          <img
+            src={ strMealThumb }
+            alt={ strMeal }
+            data-testid={ `${index}-card-img` }
+            className="recipe-photo"
+          />
+          <div data-testid={ `${index}-${testid}` }>
+            <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+          </div>
+        </Link>
+      </div>
+    );
+  }
 }
 
 MealCard.propTypes = {
-  meal: PropTypes.shape({
-    strMeal: PropTypes.string,
-    strMealThumb: PropTypes.string,
-    idMeal: PropTypes.string,
+  meals: PropTypes.shape({
+    idMeal: PropTypes.string.isRequired,
+    strMealThumb: PropTypes.string.isRequired,
+    strMeal: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  testid: PropTypes.string.isRequired,
 };
 
 export default MealCard;

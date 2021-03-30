@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function RecipeCard({ type, index, recipe }) {
-  const { pathname } = useLocation();
+function RecipeCard({ type, index, recipe, recommendation }) {
+  const pathname = type === 'Meal' ? 'comidas' : 'bebidas';
   return (
     <Link
-      to={ `${pathname}/${recipe[`id${type}`]}` }
+      to={ `/${pathname}/${recipe[`id${type}`]}` }
       data-testid={ `${index}-recipe-card` }
     >
       <img
@@ -14,15 +14,28 @@ function RecipeCard({ type, index, recipe }) {
         src={ recipe[`str${type}Thumb`] }
         alt={ recipe[`str${type}`] }
       />
-      <p data-testid={ `${index}-card-name` }>{ recipe[`str${type}`] }</p>
+      { recommendation
+          && <p>{ type === 'Meal' ? recipe.strCategory : recipe.strAlcoholic }</p> }
+      <p
+        data-testid={
+          recommendation ? `${index}-recomendation-title` : `${index}-card-name`
+        }
+      >
+        { recipe[`str${type}`] }
+      </p>
     </Link>
   );
 }
+
+RecipeCard.defaultProps = {
+  recommendation: false,
+};
 
 RecipeCard.propTypes = {
   type: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape().isRequired,
+  recommendation: PropTypes.bool,
 };
 
 export default RecipeCard;

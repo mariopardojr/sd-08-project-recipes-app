@@ -1,0 +1,29 @@
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.recommendations {
+  display: flex;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.recommendations > div {
+  min-width: 51%;
+  scroll-snap-align: start;
+}
+
+.recommendations img, .recipe-photo {
+  width: 100%;
+}
+
+.start {
+  bottom: 0;
+  position: fixed;
+}

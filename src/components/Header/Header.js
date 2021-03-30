@@ -13,7 +13,7 @@ import '../../styles/components/Header/index.css';
 const MAX_LENGTH_NAMES_CATEGORIES = 5;
 const ARGUMENT_REQUEST_ALL = { search: '', searchRadio: 'name' };
 class Header extends Component {
-  renderButton(buttons, getRecipes) {
+  renderButtons(buttons, getRecipes) {
     const { title, getFood, getDrink } = this.props;
     return (
       <>
@@ -105,7 +105,7 @@ class Header extends Component {
         {showButtonSearch && (title === 'Comidas' || title === 'Bebidas')
          && <SearchBar title={ title } />}
         {!showButtonSearch && (title === 'Comidas' || title === 'Bebidas')
-         && this.renderButton(buttons, getRecipes)}
+         && this.renderButtons(buttons, getRecipes)}
       </header>
     );
   }

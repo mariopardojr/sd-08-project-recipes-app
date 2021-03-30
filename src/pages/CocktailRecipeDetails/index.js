@@ -4,8 +4,8 @@ import DrinkDetails from '../../components/DrinkDetails';
 import Recomendations from '../../components/Recomendations';
 
 function CocktailRecipeDetails({ match }) {
-  const { id } = match.params;
   const [drink, setDrink] = useState({});
+  const { id } = match.params;
 
   useEffect(() => {
     async function getDrinkById(value) {

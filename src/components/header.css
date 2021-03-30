@@ -1,0 +1,16 @@
+.header {
+  background-color: #A5A5A5;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 15px;
+}
+
+.search-bar-input {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0px;
+}
+
+.search-bar-input input {
+  width: 97%;
+}

@@ -1,4 +1,4 @@
-import { ADD_CATEGORIES, ADD_FILTER, ADD_RECIPES, REQUEST_RECIPES } from './index';
+import { ADD_CATEGORIES, ADD_RECIPES, REQUEST_RECIPES } from './index';
 
 const addRecipes = (payload) => ({
   type: ADD_RECIPES,
@@ -9,19 +9,18 @@ const requestRecipes = () => ({
   type: REQUEST_RECIPES,
 });
 
-const addFilter = (payload) => ({
-  type: ADD_FILTER,
-  payload,
-});
-
-export const fetchRecipes = (token, type = 'meals',
-  { request = 'search', key = 's', parameter = '' } = {}) => (
+export const fetchRecipes = (type = 'meals', { key = 's', parameter = '' } = {}) => (
   async (dispatch) => {
-    const filter = request === 'filter' ? parameter : '';
-    dispatch(addFilter(filter));
+    let request = 'search';
+    const token = 1;
+    if (key === 'i') request = 'filter';
+    // const filter = request === 'filter' ? parameter : '';
+    // dispatch(addFilter(filter));
     dispatch(requestRecipes());
     const domains = { meals: 'themealdb', drinks: 'thecocktaildb' };
     const url = `https://www.${domains[type]}.com/api/json/v1/${token}/${request}.php?${key}=${parameter}`;
+    console.log(type);
+    console.log(url);
     const data = await fetch(url);
     const { [type]: recipes } = await data.json();
     dispatch(addRecipes(recipes));

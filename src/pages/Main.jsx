@@ -17,7 +17,7 @@ function Main({ location: { pathname } }) {
 
   useEffect(() => {
     dispatch(fetchCategories(token, type));
-    dispatch(fetchRecipes(token, type));
+    dispatch(fetchRecipes(type));
   }, []);
 
   return (

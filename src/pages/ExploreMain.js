@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import { fetchRecipes } from '../actions/recipes';
+import Header from '../components/Header';
 
 function ExploreMain({ location: { pathname } }) {
   const prevPath = pathname.split('/')[2]; console.log(prevPath);
@@ -13,7 +14,6 @@ function ExploreMain({ location: { pathname } }) {
   };
   const type = selectType[prevPath][0];
   const idType = selectType[prevPath][1];
-  const token = 1;
 
   const { list } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function ExploreMain({ location: { pathname } }) {
   const prevList = useRef(list);
 
   const handleClick = () => {
-    dispatch(fetchRecipes(token, type, { request: 'random', key: '' }));
+    dispatch(fetchRecipes(type, { request: 'random', key: '' }));
   };
 
   useEffect(() => {
@@ -42,6 +42,7 @@ function ExploreMain({ location: { pathname } }) {
 
   return (
     <>
+      <Header />
       <h1>{ `Explorar ${prevPath}` }</h1>
       <Link data-testid="explore-by-ingredient" to={ `${pathname}/ingredientes` }>
         Por Ingredientes

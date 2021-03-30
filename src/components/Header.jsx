@@ -23,6 +23,31 @@ const Header = () => {
     case '/comidas':
       setHeaderTitle('Comidas');
       setSearchIcon(true);
+      return;
+    case '/explorar':
+      setHeaderTitle('Explorar');
+      return;
+    case '/explorar/comidas':
+      setHeaderTitle('Explorar Comidas');
+      return;
+    case '/explorar/bebidas':
+      setHeaderTitle('Explorar Bebidas');
+      return;
+    case '/explorar/comidas/ingredientes':
+      setHeaderTitle('Explorar Ingredientes');
+      return;
+    case '/explorar/bebidas/ingredientes':
+      setHeaderTitle('Explorar Ingredientes');
+      setSearchIcon(false);
+      return;
+    case '/perfil':
+      setHeaderTitle('Perfil');
+      return;
+    case '/receitas-feitas':
+      setHeaderTitle('Receitas Feitas');
+      return;
+    case '/receitas-favoritas':
+      setHeaderTitle('Receitas Favoritas');
       break;
     default:
       break;

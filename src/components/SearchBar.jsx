@@ -19,6 +19,11 @@ const SearchBar = () => {
       alert('Sua busca deve conter somente 1 (um) caracter');
       return;
     }
+    if (filter === 'i') {
+      dispatch(fetchRecipes(type,
+        { request: 'filter', key: filter, parameter: searchText }));
+      return;
+    }
     dispatch(fetchRecipes(type, { key: filter, parameter: searchText }));
     setSearchText('');
   };

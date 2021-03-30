@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { byAddIngredient, fetchRecipes } from '../actions/recipes';
+import Header from '../components/Header';
 
 function ExploreIngredients({ location: { pathname } }) {
   const select = pathname.split('/')[2];
   const selectType = { comidas: 'meals', bebidas: 'drinks' };
   const type = selectType[select];
-  const token = 1;
 
   const { list, isFetching } = useSelector((state) => state.recipes);
   const dispatch = useDispatch();
@@ -17,7 +17,8 @@ function ExploreIngredients({ location: { pathname } }) {
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchRecipes(token, type, { request: 'list', key: 'i', parameter: 'list' }));
+    // ver esse codigo dnv
+    dispatch(fetchRecipes(type, { request: 'list', key: 'i', parameter: 'list' }));
   }, []);
 
   const handleClick = (ingredient) => {
@@ -28,6 +29,7 @@ function ExploreIngredients({ location: { pathname } }) {
   if (isFetching) return (<Loading />);
   return (
     <>
+      <Header />
       <h1>Explorar</h1>
       { type === 'meals'
         ? list.map(({ idIngredient, strIngredient }, index) => {

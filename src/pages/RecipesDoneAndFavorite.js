@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import ShareButton from '../components/ShareButton';
+import Header from '../components/Header';
 
 function RecipesDoneAndFavorite({ location: { pathname } }) {
   const { done, favorite } = useSelector((state) => state.recipes);
@@ -20,6 +21,7 @@ function RecipesDoneAndFavorite({ location: { pathname } }) {
 
   return (
     <div>
+      <Header />
       <button
         type="button"
         data-testid="filter-by-all-btn"

@@ -11,13 +11,10 @@ const requestRecipes = () => ({
   type: REQUEST_RECIPES,
 });
 
-export const fetchRecipes = (type = 'meals', { key = 's', parameter = '' } = {}) => (
+export const fetchRecipes = (type = 'meals',
+  { request = 'search', key = 's', parameter = '' } = {}) => (
   async (dispatch) => {
-    let request = 'search';
     const token = 1;
-    if (key === 'i') request = 'filter';
-    // const filter = request === 'filter' ? parameter : '';
-    // dispatch(addFilter(filter));
     dispatch(requestRecipes());
     const domains = { meals: 'themealdb', drinks: 'thecocktaildb' };
     let url = `https://www.${domains[type]}.com/api/json/v1/${token}/${request}.php?${key}=${parameter}`;

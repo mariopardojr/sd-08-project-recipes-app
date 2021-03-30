@@ -26,8 +26,12 @@ const recipes = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_RECIPES:
     return { ...state, isFetching: true };
-  case ADD_RECIPES:
-    return { ...state, isFetching: false, list: action.payload.slice(0, MAX_RECIPES) };
+  case ADD_RECIPES: {
+    let list;
+    if (action.payload === null) list = [];
+    if (action.payload !== null) list = action.payload.slice(0, MAX_RECIPES);
+    return { ...state, isFetching: false, list };
+  }
   case ADD_CATEGORIES:
     return { ...state, categories: action.payload };
   case ADD_RECOMMENDATIONS:

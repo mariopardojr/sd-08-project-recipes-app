@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Profile() {
   const [userEmail, setUserEmail] = useState({});
@@ -12,6 +13,7 @@ function Profile() {
 
   return (
     <>
+      <Header />
       <div>
         <span data-testid="profile-email">{userEmail.email}</span>
       </div>

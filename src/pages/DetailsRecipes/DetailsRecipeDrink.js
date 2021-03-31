@@ -5,7 +5,9 @@ import shareIcon from '../../images/shareIcon.svg';
 import favIconEnabled from '../../images/blackHeartIcon.svg';
 // import favIconDisabled from '../../images/whiteHeartIcon.svg';
 import filterFood from '../../utils/filterDetailsRecipes';
-import { fetchDrinkDetails } from '../../services';
+import { fetchDrinkDetails, fetchFoodsByRandom } from '../../services';
+import CardCarousel from './CardCarousel';
+import './card.css';
 
 const INITIAL_STATE_RECIPE_FOOD = {
   idDrink: '',
@@ -18,7 +20,10 @@ const INITIAL_STATE_RECIPE_FOOD = {
   strDrinkThumb: '',
   strTags: '',
   strYoutube: '',
+  recommendationMeals: [],
 };
+
+const MAX_NUMBER_CARDS = 6;
 
 class RecipeFood extends Component {
   constructor(props) {
@@ -26,10 +31,12 @@ class RecipeFood extends Component {
     this.state = INITIAL_STATE_RECIPE_FOOD;
 
     this.handleRequestDrink = this.handleRequestDrink.bind(this);
+    this.handleRecipeSuggestions = this.handleRecipeSuggestions.bind(this);
   }
 
   componentDidMount() {
     this.handleRequestDrink();
+    this.handleRecipeSuggestions();
   }
 
   handleRequestDrink() {
@@ -48,6 +55,27 @@ class RecipeFood extends Component {
     });
   }
 
+  handleRecipeSuggestions() {
+    fetchFoodsByRandom().then((response) => {
+      const data = response.meals;
+      const recommendationMeals = data
+        .reduce((acc, cur, index) => {
+          if (index < MAX_NUMBER_CARDS) {
+            acc = [...acc, cur];
+          }
+          return acc;
+        }, []);
+        // .map((a) => ({ sort: Math.random(), value: a }))
+        // .sort((a, b) => a.sort - b.sort)
+        // .map((a) => a.value);
+      // https:// stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+      this.setState((state) => ({
+        ...state,
+        recommendationMeals,
+      }));
+    });
+  }
+
   render() {
     const {
       idDrink,
@@ -58,6 +86,7 @@ class RecipeFood extends Component {
       ingredients,
       measures,
       strAlcoholic,
+      recommendationMeals,
     } = this.state;
 
     return (
@@ -130,29 +159,27 @@ class RecipeFood extends Component {
         </div>
         <h2 className="box-content">Recomendadas</h2>
         <div className="carousel">
-
-          <Link
-            to={ `/bebidas/${'_'}` }
-            className="carousel-content"
-            data-testid={ `${0}-recomendation-card` }
-          >
-            <img
-              src="img.png"
-              alt="titulo"
-              className="carousel-item-image"
+          { recommendationMeals.map((recipes, index) => (
+            <CardCarousel
+              key={ index }
+              id={ recipes.idMeal }
+              strThumb={ recipes.strMealThumb }
+              str={ recipes.strMeal }
+              index={ index }
+              origin="drinks"
             />
-          </Link>
+          ))}
 
         </div>
-        <div className="start-btn">
-          <Link
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
-            to={ `/bebidas/${idDrink}/in-progress` }
-          >
-            Iniciar receita
-          </Link>
-        </div>
+        {/* <div className="start-btn"> */}
+        <Link
+          data-testid="start-recipe-btn"
+          className="start-btn"
+          to={ `/bebidas/${idDrink}/in-progress` }
+        >
+          Iniciar receita
+        </Link>
+        {/* </div> */}
       </div>
     );
   }

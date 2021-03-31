@@ -1,0 +1,14 @@
+.hidden {
+    display: none;
+  }
+
+.teste { 
+    display: flex;
+    height:  200px;    
+}
+.start-btn {
+  background-color:#fd951f;
+  bottom: 0;  
+  position: fixed;
+}
+

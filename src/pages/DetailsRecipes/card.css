@@ -4,11 +4,11 @@
 
 .teste { 
   display: flex;
-  height:  200px;
+  height: 200px;
 }
 
 .start-btn {
-  background-color:#fd951f;
+  background-color: #fd951f;
   bottom: 0;
   position: fixed;
 }
